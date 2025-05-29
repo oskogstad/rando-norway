@@ -49,7 +49,9 @@ function loadEndings() {
   }
 }
 
-app.get('/', (req, res) => {
+app.use(express.static('public'));
+
+app.get('/api/random-word', (req, res) => {
   if (wordEntries.length === 0) {
     return res.status(500).json({ error: 'No word entries available' });
   }
@@ -65,9 +67,15 @@ app.get('/', (req, res) => {
   const randomEnding = endings[randomEndingIndex];
   
   const combinedName = randomEntry.word + randomEnding;
-  const html = `<h1>${combinedName}</h1>`;
   
-  res.send(html);
+  res.json({ 
+    word: combinedName.toUpperCase(),
+    explanation: randomEntry.explanation 
+  });
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 loadWordEntries();
