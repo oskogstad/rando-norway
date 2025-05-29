@@ -94,7 +94,7 @@ class WordGenerator {
 
     fadeOut() {
         return new Promise(resolve => {
-            this.wordElement.style.transition = 'color 0.3s ease';
+            this.wordElement.style.transition = 'color 0.1s ease';
             this.wordElement.style.color = 'transparent';
             setTimeout(resolve, 300);
         });
